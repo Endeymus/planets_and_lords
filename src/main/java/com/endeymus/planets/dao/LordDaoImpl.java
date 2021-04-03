@@ -21,10 +21,12 @@ public class LordDaoImpl implements LordDao{
             "where p.id_lord is null";
 
     private static final String SQL_FIND_ALL = "select * from lord";
+    private static final String SQL_FIND_YOUNG = "select * from lord order by age limit 10";
     private static final String SQL_FIND_BY_ID = "select * from lord where id = :id";
     private static final String SQL_UPDATE = "update lord set NAME = :name, AGE = :age WHERE id = :id";
     private static final String SQL_DELETE = "delete from lord where id = :id";
     private static final String SQL_INSERT = "insert into lord(name, age) values (:name, :age)";
+
 
     @Autowired
     public void setJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
@@ -54,7 +56,8 @@ public class LordDaoImpl implements LordDao{
     @Override
     public Lord save(Lord contract) {
         Map<String, Object> param = Map.of("name", contract.getName(), "age", contract.getAge(), "id", contract.getId());
-        namedParameterJdbcTemplate.update(SQL_UPDATE, param);
+        int i = namedParameterJdbcTemplate.update(SQL_UPDATE, param);
+        System.out.println("int i = " + i);
         return contract;
     }
 
@@ -75,6 +78,11 @@ public class LordDaoImpl implements LordDao{
     @Override
     public List<Lord> findLounger() {
         return customSqlFind(SQL_FIND_LOUNGER);
+    }
+
+    @Override
+    public List<Lord> findYoung() {
+        return customSqlFind(SQL_FIND_YOUNG);
     }
 
     private List<Lord> customSqlFind(String sql) {

@@ -38,7 +38,11 @@ class LordDaoImplTest {
 
     @Test
     void save() {
-
+        Lord lord = lordDao.findById(5);
+        lord.setName("Changed Name");
+        System.out.println(lordDao.save(lord));
+        lord.setName("Ahsoka Tano");
+        System.out.println(lordDao.save(lord));
     }
 
     @Test

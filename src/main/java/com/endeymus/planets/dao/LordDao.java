@@ -11,4 +11,5 @@ public interface LordDao {
     Lord insert(Lord contract);
     void delete(Lord contract);
     List<Lord> findLounger();
+    List<Lord> findYoung();
 }

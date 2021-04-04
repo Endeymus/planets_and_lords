@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        form {
+            margin: 5% auto;
+            width: 400px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:replace="~{blocks/header::header}"></div>
+
+
+
+<form method="post" th:action="@{/lords/add}" th:object="${lord}">
+    <input id="name" type="text" required minlength="1" th:field="*{name}">
+        <label for="name" >Имя повелителя</label>
+    <br>
+    <input id="age" type="number" min="1" max="32000" th:field="*{age}">
+        <label for="age">Возвраст</label>
+    <br>
+    <button type="submit">
+        <span>Добавить</span>
+    </button>
+</form>
+
+</body>
+</html>

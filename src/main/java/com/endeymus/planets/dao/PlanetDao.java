@@ -8,6 +8,6 @@ public interface PlanetDao {
     List<Planet> findAll();
     Planet findById(int id);
     Planet save(Planet contract);
-    Planet insert(String name);
+    Planet insert(Planet contract);
     void delete(Planet contract);
 }

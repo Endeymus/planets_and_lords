@@ -53,7 +53,7 @@ public class ApiController {
      * @param age возраст повелителя
      * @return слово "успех" при удачном выполнеии
      */
-    @PostMapping("/lord")
+    @PostMapping("/lords/add")
     public String addLord(@RequestParam String name, @RequestParam Integer age) {
         Lord lord = new Lord(name, age);
         lordDao.insert(lord);
@@ -65,9 +65,11 @@ public class ApiController {
      * @param name название планеты
      * @return слово "успех" при удачном выполнеии
      */
-    @PostMapping
+    @PostMapping("planets/add")
     public String addPlanet(@RequestParam String name) {
-        planetDao.insert(name);
+        Planet planet = new Planet();
+        planet.setName(name);
+        planetDao.insert(planet);
         return "success";
     }
 
@@ -78,7 +80,7 @@ public class ApiController {
      * @param planetId идентификатор Планеты
      * @return слово "успех" при удачном выполнеии
      */
-    @PostMapping
+    @PostMapping("lords/appoint")
     public String appointLord(@RequestParam Integer lordId, @RequestParam Integer planetId) {
         Planet planet = planetDao.findById(planetId);
         planet.setIdLord(lordId);

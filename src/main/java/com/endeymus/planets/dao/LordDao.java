@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface LordDao {
     List<Lord> findAll();
+    List<Lord> findAllWithPlanets();
     Lord findById(int id);
     Lord save(Lord contract);
     Lord insert(Lord contract);

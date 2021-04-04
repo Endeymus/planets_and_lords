@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        form {
+            margin: 5% auto;
+            width: 400px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:replace="~{blocks/header::header}"></div>
+
+<form method="post" th:action="@{/lords/appoint}" th:object="${appoint}">
+    <select th:field="*{idLord}" >
+        <option th:each="lord : ${lords}"
+                th:utext="'ID: ' + ${lord.getId()} + ', ' + ${lord.getName()}"
+                th:value="${lord.getId()}"></option>
+    </select>
+    <select th:field="*{id}" >
+        <option th:each="planet : ${planets}"
+                th:utext="'ID: ' + ${planet.getId()} + ', ' + ${planet.getName()}"
+                th:value="${planet.getId()}"></option>
+    </select>
+    <br>
+    <button type="submit">
+        <span>Добавить</span>
+    </button>
+</form>
+
+</body>
+</html>

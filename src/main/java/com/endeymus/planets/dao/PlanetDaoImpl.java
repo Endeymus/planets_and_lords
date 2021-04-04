@@ -57,12 +57,10 @@ public class PlanetDaoImpl implements PlanetDao{
     }
 
     @Override
-    public Planet insert(String name) {
-        Map<String, Object> param = Map.of("name", name);
+    public Planet insert(Planet planet) {
+        Map<String, Object> param = Map.of("name", planet.getName());
         namedParameterJdbcTemplate.update(SQL_INSERT, param);
 
-        Planet planet = new Planet();
-        planet.setName(name);
         return planet;
     }
 

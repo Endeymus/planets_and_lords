@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        form {
+            margin: 5% auto;
+            width: 400px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:replace="~{blocks/header::header}"></div>
+
+<form method="post" th:action="@{/planets/delete}">
+    <select th:name="id" >
+        <option th:each="planet : ${planets}"
+                th:utext="'ID: ' + ${planet.getId()} + ', ' + ${planet.getName()}"
+                th:value="${planet.getId()}"></option>
+    </select>
+    <br>
+    <button type="submit">
+        <span>Уничтожить</span>
+    </button>
+</form>
+
+</body>
+</html>

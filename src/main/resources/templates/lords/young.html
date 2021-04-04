@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{blocks/header::header}"></div>
+
+<table >
+    <thead>
+    <tr>
+        <th >id</th>
+        <th >Имя лорда</th>
+        <th >Возраст</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="lord : ${youngers}">
+        <td  th:text="${lord.getId()}"></td>
+        <td  th:text="${lord.getName()}"></td>
+        <td  th:text="${lord.getAge()}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

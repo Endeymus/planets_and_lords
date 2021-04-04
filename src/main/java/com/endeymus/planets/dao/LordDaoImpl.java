@@ -1,11 +1,14 @@
 package com.endeymus.planets.dao;
 
 import com.endeymus.planets.entities.Lord;
+import com.endeymus.planets.entities.Planet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +23,8 @@ public class LordDaoImpl implements LordDao{
             "left join planet p on s.id = p.id_lord " +
             "where p.id_lord is null";
 
+    private static final String SQL_FIND_ALL_WITH_PLANETS = "select s.id, s.name, s.age, a.id, a.name, a.id_lord from lord as s " +
+                                                "left join planet a on s.id = a.id_lord";
     private static final String SQL_FIND_ALL = "select * from lord";
     private static final String SQL_FIND_YOUNG = "select * from lord order by age limit 10";
     private static final String SQL_FIND_BY_ID = "select * from lord where id = :id";
@@ -37,6 +42,35 @@ public class LordDaoImpl implements LordDao{
     @Override
     public List<Lord> findAll() {
         return customSqlFind(SQL_FIND_ALL);
+    }
+
+    @Override
+    public List<Lord> findAllWithPlanets() {
+        return namedParameterJdbcTemplate.query(SQL_FIND_ALL_WITH_PLANETS, resultSet -> {
+            Map<Integer, Lord> map = new HashMap<>();
+            Lord lord;
+            while (resultSet.next()) {
+                int id = resultSet.getInt("s.id");
+                lord = map.get(id);
+                if (lord == null) {
+                    lord = new Lord();
+                    lord.setId(id);
+                    lord.setName(resultSet.getString("s.name"));
+                    lord.setAge(resultSet.getInt("s.age"));
+                    map.put(id, lord);
+                }
+                int planetId = resultSet.getInt("a.id");
+                if (planetId > 0) {
+                    Planet planet = new Planet();
+                    planet.setId(planetId);
+                    planet.setIdLord(id);
+                    planet.setName(resultSet.getString("a.name"));
+                    lord.addPlanet(planet);
+                }
+            }
+            return new ArrayList<>(map.values());
+        });
+
     }
 
     @Transactional(readOnly = true)

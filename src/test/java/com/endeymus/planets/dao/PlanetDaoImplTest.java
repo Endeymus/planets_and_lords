@@ -60,7 +60,9 @@ class PlanetDaoImplTest {
         List<Planet> planets = planetDao.findAll();
         assertNotNull(planets);
         assertEquals(5, planets.size());
-        planetDao.insert("Dathomir");
+        Planet planet = new Planet();
+        planet.setName("Dathomir");
+        planetDao.insert(planet);
         planets = planetDao.findAll();
         assertEquals(6, planets.size());
         planets.forEach(System.out::println);

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{blocks/header::header}"></div>
+
+<table >
+    <thead>
+        <tr>
+            <th rowspan="2">id</th>
+            <th rowspan="2">Имя лорда</th>
+            <th rowspan="2">Возраст</th>
+            <th >Управляет планетами</th>
+        </tr>
+        <tr>
+            <th>Имя планеты</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="lord : ${lords}">
+            <td  th:text="${lord.getId()}"></td>
+            <td  th:text="${lord.getName()}"></td>
+            <td  th:text="${lord.getAge()}"></td>
+            <td th:if="${lord.getList().size() != 0}">
+                <p th:each="planet : ${lord.getList()}">
+                    <span th:text="${planet.getName()}"></span>
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

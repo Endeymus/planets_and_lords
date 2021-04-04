@@ -1,0 +1,12 @@
+<div th:fragment="header">
+    <nav>
+        <a href="/">Информация</a>
+        <a th:href="@{/lords}">Список всех Повелителей, </a>
+        <a th:href="@{/lords/add}">Добавить нового Повелителя, </a>
+        <a th:href="@{/planets/add}">Добавить новую планету, </a>
+        <a th:href="@{/lords/appoint}">Назначить Повелителя управлять Планетой, </a>
+        <a th:href="@{/planets/delete}">Уничтожить планету, </a>
+        <a th:href="@{/lords/lounger}">Найти повелителей бездельников, </a>
+        <a th:href="@{/lords/young}">ТОП 10 самых молодых Повелителей</a>
+    </nav>
+</div>

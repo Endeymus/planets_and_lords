@@ -23,7 +23,6 @@ public class TestConfig {
                         "classpath:database/FillDB.sql").build();
     }
 
-//    @Profile("test")
     @Bean(name = "jdbcTemplateParam")
     public NamedParameterJdbcTemplate namedParameterJdbcTemplate() {
         return new NamedParameterJdbcTemplate(dataSource());

@@ -14,15 +14,17 @@
 
 <div th:replace="~{blocks/header::header}"></div>
 
+<p id="success" th:if="${!alert.equals('')}" th:text="${alert}"></p>
+
 <form method="post" th:action="@{/lords/appoint}" th:object="${appoint}">
     <select th:field="*{idLord}" >
         <option th:each="lord : ${lords}"
-                th:utext="'ID: ' + ${lord.getId()} + ', ' + ${lord.getName()}"
+                th:utext="${lord.getName()}"
                 th:value="${lord.getId()}"></option>
     </select>
     <select th:field="*{id}" >
         <option th:each="planet : ${planets}"
-                th:utext="'ID: ' + ${planet.getId()} + ', ' + ${planet.getName()}"
+                th:utext="${planet.getName()}"
                 th:value="${planet.getId()}"></option>
     </select>
     <br>

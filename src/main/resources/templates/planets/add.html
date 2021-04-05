@@ -14,7 +14,7 @@
 
 <div th:replace="~{blocks/header::header}"></div>
 
-
+<p id="success" th:if="${!alert.equals('')}" th:text="${alert}"></p>
 
 <form method="post" th:action="@{/planets/add}" th:object="${planet}">
     <input id="name" type="text" required minlength="1" th:field="*{name}">

@@ -7,6 +7,7 @@ import com.endeymus.planets.entities.Planet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -44,32 +45,46 @@ public class LordController {
     }
 
     @GetMapping("/add")
-    public String add(Model model) {
+    public String add(@ModelAttribute("alert") String alert,
+            Model model) {
         model.addAttribute("lord", new Lord());
+        model.addAttribute("alert", alert);
         return "lords/add";
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("lord") Lord lord, Model model, RedirectAttributes attributes) {
+    public String add(@ModelAttribute("lord") Lord lord, Model model,
+                      RedirectAttributes attributes, BindingResult result) {
         model.addAttribute("lord", lord);
         lordDao.insert(lord);
-        return "redirect:lords/add";
+        if (!result.hasErrors())
+            attributes.addFlashAttribute("alert", "success");
+        else
+            attributes.addFlashAttribute("alert", "failed");
+        return "redirect:add";
     }
 
     @GetMapping("/appoint")
-    public String appoint(Model model) {
+    public String appoint(@ModelAttribute("alert") String alert,
+            Model model) {
         model.addAttribute("appoint", new Planet());
         model.addAttribute("lords", lordDao.findAll());
         model.addAttribute("planets", planetDao.findAll());
+        model.addAttribute("alert", alert);
         return "lords/appoint";
     }
 
     @PostMapping("/appoint")
-    public String appoint(@ModelAttribute Planet appoint) {
+    public String appoint(@ModelAttribute Planet appoint, RedirectAttributes attributes,
+                          BindingResult result) {
         Planet planet = planetDao.findById(appoint.getId());
         planet.setIdLord(appoint.getIdLord());
         planetDao.save(planet);
-        return "redirect:/lords/appoint";
+        if (!result.hasErrors())
+            attributes.addFlashAttribute("alert", "success");
+        else
+            attributes.addFlashAttribute("alert", "failed");
+        return "redirect:appoint";
     }
 
 }

@@ -14,6 +14,8 @@
 
 <div th:replace="~{blocks/header::header}"></div>
 
+<p id="success" th:if="${!alert.equals('')}" th:text="${alert}"></p>
+
 <form method="post" th:action="@{/planets/delete}">
     <select th:name="id" >
         <option th:each="planet : ${planets}"

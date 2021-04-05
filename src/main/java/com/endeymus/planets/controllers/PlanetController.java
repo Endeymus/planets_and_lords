@@ -5,7 +5,9 @@ import com.endeymus.planets.entities.Planet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/planets")
@@ -19,29 +21,42 @@ public class PlanetController {
     }
 
     @GetMapping("/add")
-    public String add(Model model) {
+    public String add(@ModelAttribute("alert") String alert,
+            Model model) {
         model.addAttribute("planet", new Planet());
+        model.addAttribute("alert", alert);
         return "planets/add";
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("planet") Planet planet, Model model) {
+    public String add(@ModelAttribute("planet") Planet planet, Model model,
+                      RedirectAttributes attributes, BindingResult result) {
         model.addAttribute("planet", planet);
         planetDao.insert(planet);
-        return "redirect:/planets/add";
+        if (!result.hasErrors())
+            attributes.addFlashAttribute("alert", "success");
+        else
+            attributes.addFlashAttribute("alert", "failed");
+        return "redirect:add";
     }
 
     @GetMapping("/delete")
-    public String delete(Model model) {
+    public String delete(@ModelAttribute("alert") String alert, Model model) {
         model.addAttribute("planets", planetDao.findAll());
+        model.addAttribute("alert", alert);
         return "planets/delete";
     }
 
     @PostMapping("delete")
-    public String delete(@RequestParam("id") Integer id) {
+    public String delete(@RequestParam("id") Integer id,
+                         RedirectAttributes attributes, BindingResult result) {
         Planet planet = planetDao.findById(id);
         planetDao.delete(planet);
-        return "redirect:/planets/delete";
+        if (!result.hasErrors())
+            attributes.addFlashAttribute("alert", "success");
+        else
+            attributes.addFlashAttribute("alert", "failed");
+        return "redirect:delete";
     }
 
 }

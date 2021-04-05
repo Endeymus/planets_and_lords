@@ -87,6 +87,7 @@ public class LordDaoImpl implements LordDao{
     }
 
 
+
     @Override
     public Lord save(Lord contract) {
         Map<String, Object> param = Map.of("name", contract.getName(), "age", contract.getAge(), "id", contract.getId());

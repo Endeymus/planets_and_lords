@@ -1,5 +1,6 @@
 package com.endeymus.planets.dao;
 
+import com.endeymus.planets.entities.Lord;
 import com.endeymus.planets.entities.Planet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -60,8 +61,18 @@ public class PlanetDaoImpl implements PlanetDao{
     public Planet insert(Planet planet) {
         Map<String, Object> param = Map.of("name", planet.getName());
         namedParameterJdbcTemplate.update(SQL_INSERT, param);
-
         return planet;
+    }
+
+    public Planet findByName(String name) {
+        Map<String, Object> param = Map.of("name", name);
+        return namedParameterJdbcTemplate.queryForObject("select * from planet where name = :name", param, ((resultSet, i) -> {
+            Planet planet = new Planet();
+            planet.setId(resultSet.getInt("id"));
+            planet.setName(resultSet.getString("name"));
+            planet.setIdLord(resultSet.getInt("id_lord"));
+            return planet;
+        }));
     }
 
     @Override

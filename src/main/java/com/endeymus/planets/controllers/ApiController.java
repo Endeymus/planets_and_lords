@@ -44,7 +44,7 @@ public class ApiController {
      */
     @GetMapping("/lords")
     public List<Lord> lordList() {
-        return lordDao.findAll();
+        return lordDao.findAllWithPlanets();
     }
 
     /**
@@ -55,6 +55,9 @@ public class ApiController {
      */
     @PostMapping("/lords/add")
     public String addLord(@RequestParam String name, @RequestParam Integer age) {
+        if (name == null || name.equals("") ||  age <= 0){
+            return "failed to add new lord";
+        }
         Lord lord = new Lord(name, age);
         lordDao.insert(lord);
         return "success";
@@ -65,8 +68,11 @@ public class ApiController {
      * @param name название планеты
      * @return слово "успех" при удачном выполнеии
      */
-    @PostMapping("planets/add")
+    @PostMapping("/planets/add")
     public String addPlanet(@RequestParam String name) {
+        if (name == null || name.equals("")) {
+            return "failed to add new planet";
+        }
         Planet planet = new Planet();
         planet.setName(name);
         planetDao.insert(planet);
@@ -80,9 +86,12 @@ public class ApiController {
      * @param planetId идентификатор Планеты
      * @return слово "успех" при удачном выполнеии
      */
-    @PostMapping("lords/appoint")
+    @PostMapping("/lords/appoint")
     public String appointLord(@RequestParam Integer lordId, @RequestParam Integer planetId) {
         Planet planet = planetDao.findById(planetId);
+        if (planet == null) {
+            return "failed to appoint lord";
+        }
         planet.setIdLord(lordId);
         planetDao.save(planet);
         return "success";
@@ -96,6 +105,9 @@ public class ApiController {
     @GetMapping("/planet/{id}/delete")
     public String deletePlanet(@PathVariable Integer id) {
         Planet deletePlanet = planetDao.findById(id);
+        if (deletePlanet == null) {
+            return "failed to destroy planet";
+        }
         planetDao.delete(deletePlanet);
         return "success";
     }

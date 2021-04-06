@@ -7,6 +7,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс предоставляющий собой сущность в БД
+ * @author Mark Shamray
+ */
 @Getter
 @Setter
 public class Lord implements Serializable {

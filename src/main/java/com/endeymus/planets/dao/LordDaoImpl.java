@@ -12,6 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Класс осуществляющий запросы к БД
+ * @author Mark Shamray
+ */
 @Component("lordDao")
 @Transactional
 public class LordDaoImpl implements LordDao{
@@ -38,12 +42,20 @@ public class LordDaoImpl implements LordDao{
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
+    /**
+     * Запрос с получение списка всех повелителей
+     * @return список {@link java.util.List}
+     */
     @Transactional(readOnly = true)
     @Override
     public List<Lord> findAll() {
         return customSqlFind(SQL_FIND_ALL);
     }
 
+    /**
+     * Запрос с получением списка повелителей и планет, которыми они упраывляют
+     * @return список {@link java.util.List}
+     */
     @Override
     public List<Lord> findAllWithPlanets() {
         return namedParameterJdbcTemplate.query(SQL_FIND_ALL_WITH_PLANETS, resultSet -> {
@@ -73,6 +85,11 @@ public class LordDaoImpl implements LordDao{
 
     }
 
+    /**
+     * Запрос на поиск Повелителя по идентификатору
+     * @param id идентификатор Повелителя в БД
+     * @return Повелителя {@link com.endeymus.planets.entities.Lord}
+     */
     @Transactional(readOnly = true)
     @Override
     public Lord findById(int id) {
@@ -86,8 +103,11 @@ public class LordDaoImpl implements LordDao{
         }));
     }
 
-
-
+    /**
+     * Запрос на сохранение изменений у Повелителя
+     * @param contract измененный Повелитель
+     * @return Повелитель {@link com.endeymus.planets.entities.Lord}
+     */
     @Override
     public Lord save(Lord contract) {
         Map<String, Object> param = Map.of("name", contract.getName(), "age", contract.getAge(), "id", contract.getId());
@@ -96,6 +116,11 @@ public class LordDaoImpl implements LordDao{
         return contract;
     }
 
+    /**
+     * Запрос на вставку (добавления) нового Повелителя
+     * @param contract новый Повелитель
+     * @return Повелитель {@link com.endeymus.planets.entities.Lord}
+     */
     @Override
     public Lord insert(Lord contract) {
         Map<String, Object> param = Map.of("name", contract.getName(), "age", contract.getAge());
@@ -103,23 +128,40 @@ public class LordDaoImpl implements LordDao{
         return contract;
     }
 
+    /**
+     * Запрос на удаление Повелителя по идентификатору
+     * @param contract Повелитель, которого следует удалить
+     */
     @Override
     public void delete(Lord contract) {
         Map<String, Object> param = Map.of("id", contract.getId());
         namedParameterJdbcTemplate.update(SQL_DELETE, param);
     }
 
+    /**
+     * Запрос на поиск всех бездельников Повелителей
+     * @return список {@link java.util.List}
+     */
     @Transactional(readOnly = true)
     @Override
     public List<Lord> findLounger() {
         return customSqlFind(SQL_FIND_LOUNGER);
     }
 
+    /**
+     * Запрос на поиск ТОП 10 самых молодых Повелителей
+     * @return список {@link java.util.List}
+     */
     @Override
     public List<Lord> findYoung() {
         return customSqlFind(SQL_FIND_YOUNG);
     }
 
+    /**
+     * Вспомогательный метод, для получения списка Повелителей, без планет, которыми они управляют
+     * @param sql SQL запрос
+     * @return список {@link java.util.List}
+     */
     private List<Lord> customSqlFind(String sql) {
         return namedParameterJdbcTemplate.query(sql, ((resultSet, i) -> {
             Lord lord = new Lord();

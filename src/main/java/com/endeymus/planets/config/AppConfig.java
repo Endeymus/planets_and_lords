@@ -8,6 +8,10 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
+/**
+ * Конфигулационный класс для основного функицонала приложения
+ * @author Mark Shamray
+ */
 @Configuration
 @ComponentScan(basePackages = {"com.endeymus.planets"})
 @PropertySource(value = {"classpath:database/db.properties"})

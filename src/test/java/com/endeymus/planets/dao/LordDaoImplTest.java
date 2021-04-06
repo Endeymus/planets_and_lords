@@ -3,7 +3,6 @@ package com.endeymus.planets.dao;
 import com.endeymus.planets.config.AppConfig;
 import com.endeymus.planets.config.TestConfig;
 import com.endeymus.planets.entities.Lord;
-import com.endeymus.planets.entities.Planet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -109,7 +108,7 @@ class LordDaoImplTest {
     @DisplayName(value = "Должен завершиться с ошибкой [Incorrect result size: expected 1, actual 0]")
     void findNotExist() {
         Throwable throwable = assertThrows(EmptyResultDataAccessException.class, ()->{
-            Lord lord = lordDao.findById(99);
+            Lord lord = lordDao.findById(9999);
         });
         assertNotNull(throwable.getMessage());
         System.out.println(throwable.getMessage());

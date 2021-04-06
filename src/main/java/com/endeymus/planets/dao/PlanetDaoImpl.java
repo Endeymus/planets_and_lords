@@ -1,6 +1,5 @@
 package com.endeymus.planets.dao;
 
-import com.endeymus.planets.entities.Lord;
 import com.endeymus.planets.entities.Planet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -10,6 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Класс осуществляющий запросы к БД
+ * @author Mark Shamray
+ */
 @Component(value = "planetDao")
 @Transactional
 public class PlanetDaoImpl implements PlanetDao{
@@ -27,6 +30,10 @@ public class PlanetDaoImpl implements PlanetDao{
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
+    /**
+     * Запрос на поиск всех планет
+     * @return список {@link java.util.List}
+     */
     @Override
     public List<Planet> findAll() {
         return namedParameterJdbcTemplate.query(SQL_FIND_ALL, ((resultSet, i) ->  {
@@ -38,6 +45,11 @@ public class PlanetDaoImpl implements PlanetDao{
         }));
     }
 
+    /**
+     * Запрос на поиск планеты по идентификатору
+     * @param id идентификатор планеты
+     * @return Планета
+     */
     @Override
     public Planet findById(int id) {
         Map<String, Object> param = Map.of("id", id);
@@ -50,6 +62,11 @@ public class PlanetDaoImpl implements PlanetDao{
         });
     }
 
+    /**
+     * Запрос на сохранение изменений в планете
+     * @param contract Планета {@link com.endeymus.planets.entities.Planet} измененная
+     * @return Планета
+     */
     @Override
     public Planet save(Planet contract) {
         Map<String, Object> param = Map.of("name", contract.getName(), "id_lord", contract.getIdLord(), "id", contract.getId());
@@ -57,6 +74,11 @@ public class PlanetDaoImpl implements PlanetDao{
         return contract;
     }
 
+    /**
+     * Запрос на вставку (добавление) новой планеты
+     * @param planet Планета {@link com.endeymus.planets.entities.Planet} новая
+     * @return Планета
+     */
     @Override
     public Planet insert(Planet planet) {
         Map<String, Object> param = Map.of("name", planet.getName());
@@ -64,6 +86,11 @@ public class PlanetDaoImpl implements PlanetDao{
         return planet;
     }
 
+    /**
+     * Запрос на поиск планеты по имени
+     * @param name имя планеты
+     * @return Планета
+     */
     public Planet findByName(String name) {
         Map<String, Object> param = Map.of("name", name);
         return namedParameterJdbcTemplate.queryForObject("select * from planet where name = :name", param, ((resultSet, i) -> {
@@ -75,6 +102,10 @@ public class PlanetDaoImpl implements PlanetDao{
         }));
     }
 
+    /**
+     * Запрос на удаление планеты
+     * @param contract Планета {@link com.endeymus.planets.entities.Planet} которую следует удалить
+     */
     @Override
     public void delete(Planet contract) {
         if (contract == null)

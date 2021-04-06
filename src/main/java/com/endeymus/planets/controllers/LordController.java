@@ -11,6 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * Класс контроллер для обработки запросов по пути /lords/**
+ * @author Mark Shamray
+ */
 @Controller
 @RequestMapping("/lords")
 public class LordController {
@@ -32,17 +36,20 @@ public class LordController {
         return "lords/lords";
     }
 
+
     @GetMapping("/lounger")
     public String lounger(Model model) {
         model.addAttribute("loungers", lordDao.findLounger());
         return "lords/lounger";
     }
 
+
     @GetMapping("/young")
     public String yound(Model model) {
         model.addAttribute("youngers", lordDao.findYoung());
         return "lords/young";
     }
+
 
     @GetMapping("/add")
     public String add(@ModelAttribute("alert") String alert,
@@ -51,6 +58,7 @@ public class LordController {
         model.addAttribute("alert", alert);
         return "lords/add";
     }
+
 
     @PostMapping("/add")
     public String add(@ModelAttribute("lord") Lord lord, BindingResult result,  Model model,
@@ -63,6 +71,7 @@ public class LordController {
             attributes.addFlashAttribute("alert", "failed");
         return "redirect:add";
     }
+
 
     @GetMapping("/appoint")
     public String appoint(@ModelAttribute("alert") String alert,

@@ -9,6 +9,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * Класс контроллер для обработки запросов по пути /planets/**
+ * @author Mark Shamray
+ */
+
 @Controller
 @RequestMapping("/planets")
 public class PlanetController {

@@ -10,6 +10,10 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import javax.sql.DataSource;
 
+/**
+ * Конфигулационный класс для тестирования функицонала приложения
+ * @author Mark Shamray
+ */
 @Configuration
 @ComponentScan(basePackages = {"com.endeymus.planets"})
 @Profile("test")

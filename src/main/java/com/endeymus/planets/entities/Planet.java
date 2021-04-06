@@ -5,6 +5,11 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
+/**
+ * Класс предоставляющий собой сущность в БД
+ * @author Mark Shamray
+ */
+
 @Setter
 @Getter
 public class Planet implements Serializable {

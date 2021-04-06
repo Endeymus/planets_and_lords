@@ -1,34 +1,21 @@
 package com.endeymus.planets;
 
-import com.endeymus.planets.config.AppConfig;
-import com.endeymus.planets.dao.LordDao;
-import com.endeymus.planets.entities.Lord;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+@DisplayName(value = "Тестирование GUI интерфейса приложения")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SeleniumTest {
 
@@ -57,11 +44,6 @@ public class SeleniumTest {
         if (driver != null) {
             driver.close();
         }
-/*        List<Lord> lords = lordDao.findAll();
-        lords.stream()
-                .filter(x-> x.getName().equals(ADAM))
-                .collect(Collectors.toUnmodifiableList())
-                .forEach(x-> lordDao.delete(x));*/
     }
 
     @Test
@@ -147,12 +129,10 @@ public class SeleniumTest {
                 .until(driver-> driver.findElement(By.id("idLord")));
         Select idLord = new Select(element);
         idLord.selectByVisibleText(ADAM);
-//        idLord.selectByVisibleText("Mark");
 
         element = driver.findElement(By.id("id"));
         Select id = new Select(element);
         id.selectByVisibleText("Mars");
-//        id.selectByVisibleText("Земля");
 
         driver.findElement(By.tagName("button")).click();
 

@@ -19,7 +19,7 @@
 <form method="post" th:action="@{/planets/delete}">
     <select th:name="id" >
         <option th:each="planet : ${planets}"
-                th:utext="'ID: ' + ${planet.getId()} + ', ' + ${planet.getName()}"
+                th:utext="${planet.getName()}"
                 th:value="${planet.getId()}"></option>
     </select>
     <br>

@@ -53,8 +53,8 @@ public class LordController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("lord") Lord lord, Model model,
-                      RedirectAttributes attributes, BindingResult result) {
+    public String add(@ModelAttribute("lord") Lord lord, BindingResult result,  Model model,
+                      RedirectAttributes attributes) {
         model.addAttribute("lord", lord);
         lordDao.insert(lord);
         if (!result.hasErrors())
@@ -75,8 +75,7 @@ public class LordController {
     }
 
     @PostMapping("/appoint")
-    public String appoint(@ModelAttribute Planet appoint, RedirectAttributes attributes,
-                          BindingResult result) {
+    public String appoint(@ModelAttribute Planet appoint, BindingResult result, RedirectAttributes attributes) {
         Planet planet = planetDao.findById(appoint.getId());
         planet.setIdLord(appoint.getIdLord());
         planetDao.save(planet);

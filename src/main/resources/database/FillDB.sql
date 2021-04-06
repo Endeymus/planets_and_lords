@@ -14,7 +14,7 @@ insert into planet(name, id_lord) VALUES ('Tatooine', 2);
 insert into planet(name, id_lord) VALUES ('Korriban', 3);
 insert into planet(name, id_lord) VALUES ('Mandalor', 4);
 insert into planet(name, id_lord) VALUES ('Naboo', 4);
-insert into planet(name, id_lord) VALUES ('Alderaan', 5);
+insert into planet(name, id_lord) VALUES ('Alderaan', 6);
 insert into planet(name, id_lord) VALUES ('Kamino ', 6);
 insert into planet(name, id_lord) VALUES ('Vortex ', 7);
 insert into planet(name, id_lord) VALUES ('Ando Prime ', 7);

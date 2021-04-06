@@ -84,8 +84,8 @@ class LordDaoImplTest {
     void findLounger() {
         List<Lord> lords = lordDao.findLounger();
         assertAll("lords",
-                ()->assertEquals(2, lords.size()),
-                ()->assertEquals(8, lords.get(0).getId())
+                ()->assertEquals(3, lords.size()),
+                ()->assertEquals(5, lords.get(0).getId())
         );
     }
 

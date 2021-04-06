@@ -29,8 +29,8 @@ public class PlanetController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("planet") Planet planet, Model model,
-                      RedirectAttributes attributes, BindingResult result) {
+    public String add(@ModelAttribute("planet") Planet planet, BindingResult result,
+                      Model model, RedirectAttributes attributes) {
         model.addAttribute("planet", planet);
         planetDao.insert(planet);
         if (!result.hasErrors())
@@ -49,13 +49,10 @@ public class PlanetController {
 
     @PostMapping("delete")
     public String delete(@RequestParam("id") Integer id,
-                         RedirectAttributes attributes, BindingResult result) {
+                         RedirectAttributes attributes ) {
         Planet planet = planetDao.findById(id);
         planetDao.delete(planet);
-        if (!result.hasErrors())
-            attributes.addFlashAttribute("alert", "success");
-        else
-            attributes.addFlashAttribute("alert", "failed");
+        attributes.addFlashAttribute("alert", "success");
         return "redirect:delete";
     }
 
